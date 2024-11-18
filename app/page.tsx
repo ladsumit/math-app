@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function HomePage() {
   const [grade, setGrade] = useState<string | null>(null); 
-  const [question, setQuestion] = useState<string>('');
+  const [question, setQuestion] = useState<string | null>(null);
   const [answer, setAnswer] = useState<number | null>(null);
   const [userAnswer, setUserAnswer] = useState<string>(''); // Stores user input
   const [attempts, setAttempts] = useState<number>(0); // Tracks number of attempts
