@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { NextRequest } from 'next/server';
 
 export default function HomePage() {
   const [grade, setGrade] = useState<string | null>(null); 
