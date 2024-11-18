@@ -20,15 +20,31 @@ export default function HomePage() {
 
   // Fetch question from the API
   const fetchQuestion = async () => {
-    const response = await fetch(`/api/generate-question?grade=${grade}`);
-    const data = await response.json();
-    setQuestion(data.problem);
-    setAnswer(data.answer);
-    setUserAnswer(''); // Reset the user's answer
-    setFeedback(''); // Clear feedback
-    setAttempts(0); // Reset attempts for the new question
-    setShowNext(false); // Hide Next button for the new question
-  };
+    try {
+      const response = await fetch(`/api/generate-question?grade=${grade}`);
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log("New question fetched:", data);
+  
+      // Force state update even if the same question
+      setQuestion(null); // Temporary reset
+      setTimeout(() => {
+        setQuestion(data.problem);
+        setAnswer(data.answer);
+        setUserAnswer(""); // Reset the user's answer
+      }, 10);
+  
+      setFeedback(""); // Clear feedback
+      setAttempts(0); // Reset attempts for the new question
+      setShowNext(false); // Hide Next button for the new question
+    } catch (error) {
+      console.error("Error fetching question:", error);
+      alert("Failed to fetch question. Please try again.");
+    }
+  };  
 
   // Handle answer submission
   const handleSubmit = () => {
